@@ -38,4 +38,6 @@
 1) dotnet ef dbcontext info
 2) dotnet ef migrations script
 
-Иные команды прописанные в
+### Иные часто используемые команды:
+- dotnet ef migrations remove
+- dotnet ef database drop
