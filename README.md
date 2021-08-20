@@ -14,9 +14,9 @@
 1) dotnet ef dbcontext info
 2) dotnet ef migrations script
 
-#### Разработка базы данных
+### Разработка базы данных
 
-Code First
+#### Code First
 1) dotnet ef migrations add MigrationName
 2) dotnet ef database update
 
