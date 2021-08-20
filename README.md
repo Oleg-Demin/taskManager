@@ -2,8 +2,8 @@
 
 ### 
 1) dotnet tool install --global dotnet-ef
-    -- (dotnet new tool-manifest)
-    -- (dotnet tool install dotnet-ef)
+    - (dotnet new tool-manifest)
+    - (dotnet tool install dotnet-ef)
     
 ### Подключаемые пакеты:
 1) dotnet add package Microsoft.EntityFrameworkCore.Design
