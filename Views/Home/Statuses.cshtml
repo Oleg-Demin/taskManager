@@ -1,0 +1,28 @@
+﻿@using TaskManager.Models
+@model IEnumerable<TaskManager.Models.Status>
+@{
+    ViewData["Title"] = "Statuses";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.StatusId</th>
+                    <td>@item.StatusName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

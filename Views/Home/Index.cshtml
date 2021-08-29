@@ -1,0 +1,112 @@
+﻿@using TaskManager.Models
+@model List<TaskManager.Models.IndexTable>
+@{
+    ViewData["Title"] = "Task Manager";
+}
+
+<div>
+
+    <div class="text-center">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+    </div>
+
+    <div class="container">
+
+        <div class="d-flex mb-2">
+
+            <form class="me-2">
+
+                <div class="btn-group-vertical" role="group" aria-label="Basic mixed styles example">
+                    <button type="submit" class="btn btn-success text-light" asp-area="" asp-controller="Home"
+                        asp-action="Privacy">Добавить</button>
+                    <button type="submit" class="btn btn-warning" asp-area="" asp-controller="Home"
+                        asp-action="Privacy">Редактировать</button>
+                    <button type="submit" class="btn btn-danger text-light" asp-area="" asp-controller="Home"
+                        asp-action="Privacy">Удалить</button>
+                </div>
+
+            </form>
+
+            <form class="w-100">
+
+                <div class="form-floating mb-2">
+                    <input class="form-control" id="floatingInputValue" placeholder="name@example.com">
+                    <label for="floatingInputValue">Имя задачи</label>
+                </div>
+
+                <div class="form-floating mb-2">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                        style="min-height: 60px"></textarea>
+                    <label for="floatingTextarea">Описание</label>
+                </div>
+
+                <div class="d-flex">
+
+                    <div class="form-floating w-100">
+                        <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+                            @* <option selected>Не определено</option> *@
+                            <option value="1">Создана</option>
+                            <option value="2">В работе</option>
+                            <option value="3">Завершена</option>
+                        </select>
+                        <label for="floatingSelectGrid">Статус</label>
+                    </div>
+
+                    <div class="ms-2">
+                        <button type="submit" class="btn btn-primary h-100 d-inline-block" asp-area=""
+                            asp-controller="Home" asp-action="Privacy">Submit</button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.Id == 2)
+                {
+                    <tr class="table-active">
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>@item.Status</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>@item.Status</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div class="alert alert-success" role="alert">
+        Сообщение: Успешное выполнение!
+    </div>
+    <div class="alert alert-warning" role="alert">
+        Сообщение: Не указана строка!
+    </div>
+    <div class="alert alert-danger" role="alert">
+        Сообщение: Ошибка вводимых данных!
+    </div>
+
+</div>
