@@ -1,5 +1,5 @@
-﻿@using TaskManager.Models
-@model List<TaskManager.Models.IndexTable>
+﻿@using TaskManager.ViewModels;
+@model IndexViewModel;
 @{
     ViewData["Title"] = "Task Manager";
 }
@@ -12,101 +12,181 @@
 
     <div class="container">
 
-        <div class="d-flex mb-2">
+        <div class="mb-2">
+            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                <button id="btn-add" type="button" class="btn btn-success">Добавить</button>
+                <button id="btn-edit" type="button" class="btn btn-warning">Редактировать</button>
+                <button id="btn-delete" type="button" class="btn btn-danger">Удалить</button>
+            </div>
+        </div>
 
-            <form class="me-2">
+        <div class="mb-2">
 
-                <div class="btn-group-vertical" role="group" aria-label="Basic mixed styles example">
-                    <button type="submit" class="btn btn-success text-light" asp-area="" asp-controller="Home"
-                        asp-action="Privacy">Добавить</button>
-                    <button type="submit" class="btn btn-warning" asp-area="" asp-controller="Home"
-                        asp-action="Privacy">Редактировать</button>
-                    <button type="submit" class="btn btn-danger text-light" asp-area="" asp-controller="Home"
-                        asp-action="Privacy">Удалить</button>
-                </div>
+            <div id="form-add" class="forms" style="display: none;">
+                <form asp-action="Index" asp-controller="Home" method="POST" class="w-100">
 
-            </form>
+                    <div class="form-floating mb-2">
+                        <input asp-for="Add.EnteredName" class="form-control" id="floatingInputValue" placeholder="">
+                        <label>Имя задачи</label>
+                    </div>
 
-            <form class="w-100">
+                    <div class="form-floating mb-2">
+                        <textarea asp-for="Add.EnteredDescription" class="form-control" placeholder=""
+                            id="floatingTextarea" style="resize: none; min-height: 60px; max-height: 250px;"></textarea>
+                        <label>Описание</label>
+                    </div>
 
-                <div class="form-floating mb-2">
-                    <input class="form-control" id="floatingInputValue" placeholder="name@example.com">
-                    <label for="floatingInputValue">Имя задачи</label>
-                </div>
+                    <div class="d-flex">
 
-                <div class="form-floating mb-2">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
-                        style="min-height: 60px"></textarea>
-                    <label for="floatingTextarea">Описание</label>
-                </div>
+                        <div class="form-floating w-100">
+                            <select asp-for="Add.EnteredStatusId" class="form-select" id="floatingSelectGrid"
+                                aria-label="Floating label select example">
+                                @foreach (var status in Model.Statuses)
+                                {
+                                    <option value="@status.StatusId">@status.StatusName</option>
+                                }
+                            </select>
+                            <label for="floatingSelectGrid">Статус</label>
+                        </div>
 
+                        <div class="ms-2">
+                            <button type="submit"
+                                class="btn btn text-white border border-primary bg-primary rounded h-100">Добавить</button>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+
+            <div id="form-edit" class="forms" style="display: none;">
+                <form asp-action="Index" asp-controller="Home" method="POST" class="w-100">
+
+                    <div class="form-floating mb-2">
+                        <input asp-for="Edit.EnteredName" class="form-control" id="floatingInputValue" placeholder="">
+                        <label>Имя задачи</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <textarea asp-for="Edit.EnteredDescription" class="form-control" placeholder=""
+                            id="floatingTextarea" style="resize: none; min-height: 60px; max-height: 250px;"></textarea>
+                        <label>Описание</label>
+                    </div>
+
+                    <div class="d-flex">
+
+                        <div class="form-floating w-100">
+                            <select asp-for="Edit.EnteredStatusId" class="form-select" id="floatingSelectGrid"
+                                aria-label="Floating label select example">
+                                @foreach (var status in Model.Statuses)
+                                {
+                                    <option value="@status.StatusId">@status.StatusName</option>
+                                }
+                            </select>
+                            <label for="floatingSelectGrid">Статус</label>
+                        </div>
+
+                        <div class="ms-2">
+                            <button type="submit"
+                                class="btn btn text-white border border-primary bg-primary rounded h-100">Редактировать</button>
+                        </div>
+
+                    </div>
+
+                    <input asp-for="Edit.ActiveTableRow" class="activeTableRow" style="display: none;">
+
+                </form>
+            </div>
+
+            <div id="form-delete" class="forms" style="display: none;">
                 <div class="d-flex">
 
-                    <div class="form-floating w-100">
-                        <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-                            @* <option selected>Не определено</option> *@
-                            <option value="1">Создана</option>
-                            <option value="2">В работе</option>
-                            <option value="3">Завершена</option>
-                        </select>
-                        <label for="floatingSelectGrid">Статус</label>
+                    <div class="alert alert-light border border-2 text-dark w-100 mb-0" role="alert">
+                        <span class="fw-bold">Вы уверены что хотите удалить задачу?</span><br>
+                        <ul class="mb-0">
+                            <li>
+                                <span class="fw-bold">Имя: </span>
+                                <span class="activeRowName text-break"></span>
+                            </li>
+                            <li>
+                                <span class="fw-bold">Описание: </span>
+                                <span class="activeRowDescription text-break"></span>
+                            </li>
+                            <li>
+                                <span class="fw-bold">Статус: </span>
+                                <span class="activeRowStatusName text-break"></span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="ms-2">
-                        <button type="submit" class="btn btn-primary h-100 d-inline-block" asp-area=""
-                            asp-controller="Home" asp-action="Privacy">Submit</button>
-                    </div>
+                    <form asp-action="Index" asp-controller="Home" method="POST" class="ms-2">
+                        <input asp-for="Delete.ActiveTableRow" class="activeTableRow" style="display: none;">
+                        <div class="btn-group-vertical h-100" role="group" aria-label="Basic example">
+                            <button type="button" id="#btnNoDelete"
+                                class="btn text-primary border border-primary rounded-top">Нет</button>
+                            <button type="submit"
+                                class="btn text-white border border-primary bg-primary rounded-bottom">Да</button>
+                        </div>
+                    </form>
 
                 </div>
-
-            </form>
+            </div>
 
         </div>
 
     </div>
 
-    <table class="table table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                if (item.Id == 2)
-                {
-                    <tr class="table-active">
-                        <th scope="row">@item.Id</th>
-                        <td>@item.Name</td>
-                        <td>@item.Description</td>
-                        <td>@item.Status</td>
-                    </tr>
-                }
-                else
-                {
-                    <tr>
-                        <th scope="row">@item.Id</th>
-                        <td>@item.Name</td>
-                        <td>@item.Description</td>
-                        <td>@item.Status</td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
+    @if (Model.AlertWrongEntry)
+    {
+        <div class="container">
+            <div asp-validation-summary="All" class="alert alert-danger mb-2" role="alert"></div>
+        </div>
+    }
 
-    <div class="alert alert-success" role="alert">
-        Сообщение: Успешное выполнение!
-    </div>
-    <div class="alert alert-warning" role="alert">
-        Сообщение: Не указана строка!
-    </div>
-    <div class="alert alert-danger" role="alert">
-        Сообщение: Ошибка вводимых данных!
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-hover" id="indexTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var table = (from task in Model.Tasks
+                                     join status in Model.Statuses on task.StatusId equals status.StatusId
+                                     orderby task.Id
+                                     select new
+                                     {
+                                         Id = task.Id,
+                                         Name = task.Name,
+                                         Description = task.Description,
+                                         StatusName = status.StatusName,
+                                         StatusId = status.StatusId
+                                     }).ToList();
+
+                        int i = 1;
+                        foreach (var row in table)
+                        {
+                            <tr id="@row.Id" class="part">
+                                <th scope="row">@i</th>
+                                <td class="name">@row.Name</td>
+                                <td class="description">@row.Description</td>
+                                <td class="status" id="@row.StatusId">
+                                    @row.StatusName
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>
+
+@* <script src="~/js/index.js" asp-append-version="true"></script> *@

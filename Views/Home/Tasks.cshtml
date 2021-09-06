@@ -4,29 +4,33 @@
     ViewData["Title"] = "Tasks";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@ViewData["Title"]</h1>
+<div class="container">
+    <div class="text-center">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+    </div>
 
-    <table class="table">
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">StatusId</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-responsive">
+        <table class="table" id="tasks">
+            <thead class="table-dark">
                 <tr>
-                    <th scope="row">@item.Id</th>
-                    <td>@item.Name</td>
-                    <td>@item.Description</td>
-                    <td>@item.StatusId</td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">StatusId</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>@item.StatusId</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
 </div>

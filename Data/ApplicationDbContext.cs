@@ -12,7 +12,7 @@ namespace TaskManager.Data
         public ApplicationDbContext()
         {
             // Database.EnsureCreated();
-            // db.Database.EnsureDeleted();
+            // Database.EnsureDeleted();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
