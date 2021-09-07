@@ -1,3 +1,5 @@
+-- Данная БД служит всего лишь примером, и необходима только для наглядности
+
 -- DROP DATABASE taskManagerSQL;
 -- CREATE DATABASE taskManagerSQL;
 
