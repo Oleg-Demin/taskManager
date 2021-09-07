@@ -2,6 +2,13 @@
 @model IndexViewModel;
 @{
     ViewData["Title"] = "Task Manager";
+
+    string addFormStyleDispley = "display: none;";
+    string editFormStyleDispley = "display: none;";
+    string deleteFormStyleDispley = "display: none;";
+    if (Model.AddFormOpen) addFormStyleDispley = "";
+    if (Model.EditFormOpen) editFormStyleDispley = "";
+    if (Model.DeleteFormOpen) deleteFormStyleDispley = "";
 }
 
 <div>
@@ -22,7 +29,7 @@
 
         <div class="mb-2">
 
-            <div id="form-add" class="forms" style="display: none;">
+            <div id="form-add" class="forms" style="@addFormStyleDispley">
                 <form asp-action="Index" asp-controller="Home" method="POST" class="w-100">
 
                     <div class="form-floating mb-2">
@@ -59,7 +66,7 @@
                 </form>
             </div>
 
-            <div id="form-edit" class="forms" style="display: none;">
+            <div id="form-edit" class="forms" style="@editFormStyleDispley">
                 <form asp-action="Index" asp-controller="Home" method="POST" class="w-100">
 
                     <div class="form-floating mb-2">
@@ -98,7 +105,7 @@
                 </form>
             </div>
 
-            <div id="form-delete" class="forms" style="display: none;">
+            <div id="form-delete" class="forms" style="@deleteFormStyleDispley">
                 <div class="d-flex">
 
                     <div class="alert alert-light border border-2 text-dark w-100 mb-0" role="alert">
@@ -171,7 +178,10 @@
                         int i = 1;
                         foreach (var row in table)
                         {
-                            <tr id="@row.Id" class="part">
+                            @* string classActiveRow = "";
+                            if(@row.Id == lastEditTableRow) classActiveRow = "active-row"; *@
+                                
+                            <tr id="@row.Id" class="part"> @* @classActiveRow *@
                                 <th scope="row">@i</th>
                                 <td class="name">@row.Name</td>
                                 <td class="description">@row.Description</td>

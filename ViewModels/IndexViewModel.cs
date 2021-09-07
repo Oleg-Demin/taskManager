@@ -14,5 +14,9 @@ namespace TaskManager.ViewModels
         public DeleteRowViewModel Delete { get; set; }
 
         public bool AlertWrongEntry { get; set; }
+
+        public bool AddFormOpen { get; set; }
+        public bool EditFormOpen { get; set; }
+        public bool DeleteFormOpen { get; set; }
     }
 }

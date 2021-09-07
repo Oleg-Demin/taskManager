@@ -1,11 +1,13 @@
-﻿using System;
+﻿using System.Xml;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+
+using TaskManager.ViewModels;
 using TaskManager.Models;
 using TaskManager.Data;
 
@@ -19,34 +21,139 @@ namespace TaskManager.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        // private readonly IConfiguration Configuration;
+        private IndexViewModel indexViewModel = new IndexViewModel();
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-
                 var statuses = db.Statuses.ToList();
+                var tasks = db.Tasks.ToList();
 
-                var table = db.Tasks.Join(
-                        db.Statuses,
-                        tsk => tsk.Id,
-                        sts => sts.StatusId,
-                        (tsk, sts) => new IndexTable
-                        {
-                            Id = tsk.Id,
-                            Name = tsk.Name,
-                            Description = tsk.Description,
-                            Status = sts.StatusName
-                        }
-                    ).ToList();
-                
-                return View(table);
+                indexViewModel.Statuses = statuses;
+                indexViewModel.Tasks = tasks;
+                return View(indexViewModel);
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult Index(IndexViewModel model)
+        {
+            if (model.Add != null)
+            {
+                if (AddRow(model.Add))
+                {
+                    ModelState.Clear();
+                }
+                else
+                {
+                    indexViewModel.AlertWrongEntry = true;
+                }
+
+                indexViewModel.AddFormOpen = true;
+            }
+            if (model.Edit != null)
+            {
+                if (EditRow(model.Edit))
+                {
+                    ModelState.Clear();
+                }
+                else
+                {
+                    indexViewModel.AlertWrongEntry = true;
+                }
+
+                indexViewModel.EditFormOpen = true;
+            }
+            if (model.Delete != null)
+            {
+                if (DeleteRow(model.Delete))
+                {
+                    ModelState.Clear();
+                }
+                else
+                {
+                    indexViewModel.AlertWrongEntry = true;
+                }
+
+                indexViewModel.DeleteFormOpen = true;
+            }
+
+            return Index();
+        }
+
+        public bool AddRow(AddRowViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    var task = new TaskManager.Models.Task
+                    {
+                        Name = model.EnteredName,
+                        Description = model.EnteredDescription,
+                        StatusId = model.EnteredStatusId
+                    };
+
+                    db.Tasks.Add(task);
+                    db.SaveChanges();
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool EditRow(EditRowViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    var task = db.Tasks.Find(model.ActiveTableRow);
+
+                    task.Name = model.EnteredName;
+                    task.Description = model.EnteredDescription;
+                    task.StatusId = model.EnteredStatusId;
+
+                    db.Tasks.Update(task);
+                    db.SaveChanges();
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteRow(DeleteRowViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    var task = db.Tasks.Find(model.ActiveTableRow);
+                    db.Tasks.Remove(task);
+                    db.SaveChanges();
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -54,7 +161,7 @@ namespace TaskManager.Controllers
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var statuses = db.Statuses.ToList();
+                var statuses = db.Statuses.OrderBy(item => item.StatusId).ToList();
                 return View(statuses);
             }
         }
@@ -63,7 +170,7 @@ namespace TaskManager.Controllers
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var tasks = db.Tasks.ToList();
+                var tasks = db.Tasks.OrderBy(item => item.Id).ToList();
                 return View(tasks);
             }
         }

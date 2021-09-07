@@ -83,7 +83,8 @@
 
         $('#form-edit select option[value=' + activeRowStatusId + ']')
             .prop('selected', true);
-
+        
+        // Задаем значение активной строки таблицы, скрытому полю ввода формы изменения и формы удаления
         $('.activeTableRow').val(activeRowId);
     });
 
