@@ -40,15 +40,16 @@
         if (formIsHidden)
             $('#form-delete').show();
 
+        console.log("click: NO");
+
         $('.alert-danger').hide();
     });
 
     // Клик по кнопке отказа от удаления "Нет"
-    $('#btnNoDelete').click(function () {
-        let formIsHidden = $('#form-delete').is(':hidden');
+    $('#btnCloseFormDelete').click(function () {
         $('.forms').hide();
-        if (formIsHidden)
-            $('#form-delete').show();
+        
+        console.log("click: NO");
 
         $('.alert-danger').hide();
     });
@@ -83,7 +84,7 @@
 
         $('#form-edit select option[value=' + activeRowStatusId + ']')
             .prop('selected', true);
-        
+
         // Задаем значение активной строки таблицы, скрытому полю ввода формы изменения и формы удаления
         $('.activeTableRow').val(activeRowId);
     });
