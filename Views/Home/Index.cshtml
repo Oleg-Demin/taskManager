@@ -129,7 +129,7 @@
                     <form asp-action="Index" asp-controller="Home" method="POST" class="ms-2">
                         <input asp-for="Delete.ActiveTableRow" class="activeTableRow" style="display: none;">
                         <div class="btn-group-vertical h-100" role="group" aria-label="Basic example">
-                            <button type="button" id="#btnNoDelete"
+                            <button type="button" id="btnCloseFormDelete"
                                 class="btn text-primary border border-primary rounded-top">Нет</button>
                             <button type="submit"
                                 class="btn text-white border border-primary bg-primary rounded-bottom">Да</button>
@@ -178,10 +178,7 @@
                         int i = 1;
                         foreach (var row in table)
                         {
-                            @* string classActiveRow = "";
-                            if(@row.Id == lastEditTableRow) classActiveRow = "active-row"; *@
-                                
-                            <tr id="@row.Id" class="part"> @* @classActiveRow *@
+                            <tr id="@row.Id" class="part">
                                 <th scope="row">@i</th>
                                 <td class="name">@row.Name</td>
                                 <td class="description">@row.Description</td>
