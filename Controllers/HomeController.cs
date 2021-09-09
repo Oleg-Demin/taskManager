@@ -134,6 +134,10 @@ namespace TaskManager.Controllers
             }
             else
             {
+                // model.EnteredDescription=string.Empty;
+                // model.EnteredName=string.Empty;
+                // model.EnteredStatusId=1;
+                // ModelState.Remove();
                 return false;
             }
         }
