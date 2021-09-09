@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = "Task Manager";
 
-    string addFormStyleDispley = (Model.AddFormOpen) ? "display: inline;" : "display: none;";
-    string editFormStyleDispley = (Model.EditFormOpen) ? "display: inline;" : "display: none;";
-    string deleteFormStyleDispley = (Model.DeleteFormOpen) ? "display: inline;" : "display: none;"; 
+    string addFormStyleDispley = (Model.AddFormOpen) ? "displayInline" : "displayNone";
+    string editFormStyleDispley = (Model.EditFormOpen) ? "displayInline" : "displayNone";
+    string deleteFormStyleDispley = (Model.DeleteFormOpen) ? "displayInline" : "displayNone";
 }
 
 <div>
@@ -26,7 +26,7 @@
 
         <div class="mb-2">
 
-            <div id="form-add" class="forms" style="@addFormStyleDispley">
+            <div id="form-add" class="forms @addFormStyleDispley">
                 <form asp-action="Index" asp-controller="Home" method="POST" class="w-100">
 
                     <div class="form-floating mb-2">
@@ -63,7 +63,7 @@
                 </form>
             </div>
 
-            <div id="form-edit" class="forms" style="@editFormStyleDispley">
+            <div id="form-edit" class="forms @editFormStyleDispley">
                 <form asp-action="Index" asp-controller="Home" method="POST" class="w-100">
 
                     <div class="form-floating mb-2">
@@ -102,7 +102,7 @@
                 </form>
             </div>
 
-            <div id="form-delete" class="forms" style="@deleteFormStyleDispley">
+            <div id="form-delete" class="forms @deleteFormStyleDispley">
                 <div class="d-flex">
 
                     <div class="alert alert-light border border-2 text-dark w-100 mb-0" role="alert">
@@ -192,3 +192,5 @@
     </div>
 
 </div>
+
+@* <script src="~/js/index.js" asp-append-version="true"></script> *@
