@@ -41,16 +41,12 @@
         if (formIsHidden)
             $('#form-delete').show();
 
-        console.log("click: NO");
-
         $('.alert-danger').hide();
     });
 
     // Клик по кнопке отказа от удаления "Нет"
     $('#btnCloseFormDelete').click(function () {
         $('.forms').hide();
-
-        console.log("click: NO");
 
         $('.alert-danger').hide();
     });
@@ -101,8 +97,13 @@
         $('tbody #' + lastactiveEditRow).addClass('active-row');
 });
 
-// Автоматическое увеличение textarea при загрузке документа
 $(document).ready(function () {
+    $('#form-add textarea')
+        .outerHeight(38)
+        .outerHeight(
+            $('#form-add textarea')
+                .prop('scrollHeight') + 2
+        );
     $('#form-edit textarea')
         .outerHeight(38)
         .outerHeight(
