@@ -6,6 +6,7 @@
     var activeRowStatusName;
     var activeRowStatusId;
 
+
     // Клик по кнопке "Добавить"
     $('#btn-add').click(function () {
         let formIsHidden = $('#form-add').is(':hidden');
@@ -48,7 +49,7 @@
     // Клик по кнопке отказа от удаления "Нет"
     $('#btnCloseFormDelete').click(function () {
         $('.forms').hide();
-        
+
         console.log("click: NO");
 
         $('.alert-danger').hide();
@@ -89,9 +90,23 @@
         $('.activeTableRow').val(activeRowId);
     });
 
-    // Автоматическое увеличение textarea в высоту
+    // Автоматическое увеличение textarea в высоту при заполнении
     $(document).on('input', 'textarea', function () {
         $(this).outerHeight(38).outerHeight(this.scrollHeight + 2);
     });
 
+    // При ошибке ввода в форме "Редатктирования", при обновлении страницы отметить активную строку таблицы
+    var lastactiveEditRow = $('#activeEditRow').attr('value');
+    if (lastactiveEditRow)
+        $('tbody #' + lastactiveEditRow).addClass('active-row');
+});
+
+// Автоматическое увеличение textarea при загрузке документа
+$(document).ready(function () {
+    $('#form-edit textarea')
+        .outerHeight(38)
+        .outerHeight(
+            $('#form-edit textarea')
+                .prop('scrollHeight') + 2
+        );
 });
