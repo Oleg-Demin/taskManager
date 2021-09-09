@@ -3,12 +3,9 @@
 @{
     ViewData["Title"] = "Task Manager";
 
-    string addFormStyleDispley = "display: none;";
-    string editFormStyleDispley = "display: none;";
-    string deleteFormStyleDispley = "display: none;";
-    if (Model.AddFormOpen) addFormStyleDispley = "";
-    if (Model.EditFormOpen) editFormStyleDispley = "";
-    if (Model.DeleteFormOpen) deleteFormStyleDispley = "";
+    string addFormStyleDispley = (Model.AddFormOpen) ? "display: inline;" : "display: none;";
+    string editFormStyleDispley = (Model.EditFormOpen) ? "display: inline;" : "display: none;";
+    string deleteFormStyleDispley = (Model.DeleteFormOpen) ? "display: inline;" : "display: none;"; 
 }
 
 <div>
@@ -100,7 +97,7 @@
 
                     </div>
 
-                    <input asp-for="Edit.ActiveTableRow" class="activeTableRow" style="display: none;">
+                    <input asp-for="Edit.ActiveTableRow" class="activeTableRow" id="activeEditRow" style="display: none;">
 
                 </form>
             </div>
