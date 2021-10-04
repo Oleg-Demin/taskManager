@@ -21,7 +21,7 @@ Visual Studio Code 1.60.0
 ## Работа с командной строкой (в директории проекта)
 
 ### Создание решения через консоль
-- dotnet new console -o taskManager 
+- dotnet new mvc -o taskManager 
 
 ### Установка Entity Framework Core
 #### Глобально
